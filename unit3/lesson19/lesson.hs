@@ -1,5 +1,6 @@
 import qualified Data.Map as Map
 import Data.List
+import Data.Maybe
 
 data Organ = Heart | Brain | Kidney | Spleen deriving (Show, Eq)
 
@@ -86,3 +87,14 @@ processAndReport Nothing = "error, id not found"
 processRequest :: Int -> Map.Map Int Organ -> String
 processRequest id catalog = processAndReport organ
   where organ = Map.lookup id catalog
+
+
+-- Q19.1
+emptyDrawers :: [Maybe Organ] -> Int
+emptyDrawers organs = length . filter isNothing $ organs
+
+-- Q.19.2
+maybeMap :: (a -> b) -> [Maybe a] -> [Maybe b]
+maybeMap f [] = []
+maybeMap f (Nothing:xs) = Nothing : maybeMap f xs
+maybeMap f (Just x:xs) = Just (f x) : maybeMap f xs
